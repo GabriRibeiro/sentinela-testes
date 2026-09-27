@@ -1,0 +1,16 @@
+diff --git a/src/sentinela/preprocessamento.py b/src/sentinela/preprocessamento.py
+index 8c0cc08..0ae7e37 100644
+--- a/src/sentinela/preprocessamento.py
++++ b/src/sentinela/preprocessamento.py
+@@ -20,6 +20,11 @@ def limpar(df: pd.DataFrame) -> pd.DataFrame:
+     limpo["id_operador"] = limpo["id_operador"].astype(str).str.strip().str.upper()
+     limpo["unidade_pressao"] = limpo["unidade_pressao"].astype(str).str.strip().str.lower()
+ 
++    psi_para_bar = 1 / 14.5038
++    em_psi = limpo["unidade_pressao"] == "psi"
++    limpo.loc[em_psi, "pressao"] = limpo.loc[em_psi, "pressao"] * psi_para_bar
++    limpo["unidade_pressao"] = "bar"
++
+     # Motor parado não é leitura válida: o historiador registra a linha, mas
+     # não há o que prever enquanto o eixo não gira.
+     limpo = limpo[limpo["rpm"] >= RPM_MINIMO]

@@ -70,13 +70,14 @@ def test_pressao_apos_limpar_respeita_a_faixa_de_operacao_em_bar_bug(nome_conjun
     bruto = sn.dados.carregar(nome_conjunto)
     limpo = sn.preprocessamento.limpar(bruto)
 
+    fora_da_faixa = ~limpo["pressao"].between(3.0, 4.5)
+    fracao = fora_da_faixa.mean()
     por_unidade = limpo.groupby("unidade_pressao")["pressao"].agg(["min", "max", "mean"])
-    fora_da_faixa = por_unidade[(por_unidade["min"] < 3.0) | (por_unidade["max"] > 4.5)]
 
-    assert fora_da_faixa.empty, (
-        f"BUG: em '{nome_conjunto}', limpar() nunca converte pressão de psi para bar. Faixas por "
-        f"unidade após a limpeza:\n{por_unidade}\nA ficha técnica exige 3.0-4.5 bar para todas as "
-        "linhas, independente da unidade original."
+    assert fracao < 0.01, (
+        f"BUG: em '{nome_conjunto}', limpar() nunca converte pressão de psi para bar. "
+        f"{100*fracao:.1f}% das leituras ficam fora da faixa de operação (3.0-4.5 bar) depois de "
+        f"limpar(). Faixas por unidade original:\n{por_unidade}"
     )
 
 

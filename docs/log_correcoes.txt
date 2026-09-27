@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\User\Documents\repositorio\sentinela-testes\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\User\Documents\repositorio\sentinela-testes
+configfile: pytest.ini
+collecting ... collected 5 items
+
+tests/test_preprocessamento.py::test_pressao_apos_limpar_respeita_a_faixa_de_operacao_em_bar_bug[treino] PASSED [ 20%]
+tests/test_preprocessamento.py::test_pressao_apos_limpar_respeita_a_faixa_de_operacao_em_bar_bug[teste] PASSED [ 40%]
+tests/test_preprocessamento.py::test_pressao_apos_limpar_respeita_a_faixa_de_operacao_em_bar_bug[producao] PASSED [ 60%]
+tests/test_features.py::test_temp_media_6h_depende_do_futuro_bug PASSED  [ 80%]
+tests/test_pipeline.py::test_prever_registro_ignora_a_ordem_das_chaves_do_dicionario_bug PASSED [100%]
+
+============================== 5 passed in 2.19s ==============================

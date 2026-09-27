@@ -1,0 +1,22 @@
+diff --git a/src/sentinela/modelo.py b/src/sentinela/modelo.py
+index 7edf174..7d109d1 100644
+--- a/src/sentinela/modelo.py
++++ b/src/sentinela/modelo.py
+@@ -96,11 +96,12 @@ class Modelo:
+         É o caminho usado pelo painel da sala de controle, que recebe um
+         registro por vez.
+         """
+-        vetor = np.array([float(valor) for valor in registro.values()], dtype=np.float64)
+-        if vetor.size != len(self.ordem_features):
+-            raise ValueError(
+-                f"esperadas {len(self.ordem_features)} features, recebidas {vetor.size}"
+-            )
++        faltando = set(self.ordem_features) - set(registro)
++        if faltando:
++            raise ValueError(f"faltam features no registro: {sorted(faltando)}")
++        vetor = np.array(
++            [float(registro[nome]) for nome in self.ordem_features], dtype=np.float64
++        )
+         return int(self.prever(vetor.reshape(1, -1), limiar=limiar)[0])
+ 
+ 
